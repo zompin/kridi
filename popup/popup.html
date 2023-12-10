@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html>
+    <header>
+        <style>
+            body {
+                padding: 5px;
+            }
+
+            label {
+                display: flex;
+                flex-direction: column;
+                gap: 5px;
+            }
+
+            label + label {
+                margin-top: 10px;
+            }
+
+            input, textarea {
+
+            }
+
+            textarea {
+                resize: vertical;
+                height: 150px;
+            }
+
+            #save {
+                margin-top: 10px;
+            }
+
+            #result:not(:empty) {
+                margin-top: 10px;
+            }
+
+            #errors:not(:empty) {
+                margin-top: 10px;
+            }
+        </style>
+    </header>
+    <body>
+        <label>
+            Proxy host:
+            <input type="text" id="proxyHost">
+        </label>
+        <label>
+            Proxy port:
+            <input type="text" id="proxyPort">
+        </label>
+        <label>
+            Login:
+            <input type="text" id="login">
+        </label>
+        <label>
+            Password:
+            <input type="password" id="password">
+        </label>
+        <label>
+            Patterns:
+            <textarea id="patterns" placeholder="google.com or 8.8.4.4"></textarea>
+        </label>
+        <button id="save">Save</button>
+        <div id="result"></div>
+        <div id="errors"></div>
+        <script src="popup.js"></script>
+    </body>
+</html>

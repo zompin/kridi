@@ -1,0 +1,19 @@
+{
+  "manifest_version": 2,
+  "name": "Rokot HTTP proxy",
+  "version": "1.0",
+  "description": "Proxy",
+  "background": {
+    "scripts": ["main.js"]
+  },
+  "browser_specific_settings": {
+    "gecko": {
+      "id": "test-addon-id@rokot",
+      "strict_min_version": "93"
+    }
+  },
+  "browser_action": {
+    "default_popup": "popup/popup.html"
+  },
+  "permissions": ["proxy", "storage", "<all_urls>"]
+}
