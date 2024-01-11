@@ -1,8 +1,4 @@
-const PROXY_HOST = 'PROXY_HOST';
-const PROXY_PORT = 'PROXY_PORT';
-const PATTERNS = 'PATTERNS';
-const LOGIN = 'LOGIN';
-const PASSWORD = 'PASSWORD';
+import { PROXY_HOST, PROXY_PORT, PATTERNS, LOGIN, PASSWORD } from "./js/constants.js";
 
 const direct = { type: "direct" }
 let proxy = null

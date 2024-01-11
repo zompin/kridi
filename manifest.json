@@ -4,7 +4,8 @@
   "version": "1.0",
   "description": "Proxy",
   "background": {
-    "scripts": ["main.js"]
+    "scripts": ["main.js"],
+    "type": "module"
   },
   "browser_specific_settings": {
     "gecko": {

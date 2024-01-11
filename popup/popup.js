@@ -1,15 +1,20 @@
-const PROXY_HOST = 'PROXY_HOST';
-const PROXY_PORT = 'PROXY_PORT';
-const PATTERNS = 'PATTERNS';
-const LOGIN = 'LOGIN';
-const PASSWORD = 'PASSWORD';
+import { PROXY_HOST, PROXY_PORT, PATTERNS, LOGIN, PASSWORD } from "../js/constants.js";
 
-save.addEventListener('click', () => {
-    const proxyHostValue = proxyHost.value
-    const proxyPortValue = proxyPort.value
-    const patternsValue = patterns.value
-    const loginValue = login.value
-    const passwordValue = password.value
+const saveEl = document.getElementById('save')
+const proxyHostEl = document.getElementById('proxyHost')
+const proxyPortEl = document.getElementById('proxyPort')
+const patternsEl = document.getElementById('patterns')
+const loginEl = document.getElementById('login')
+const passwordEl = document.getElementById('password')
+const resultEl = document.getElementById('result')
+const errorsEl = document.getElementById('errors')
+
+saveEl.addEventListener('click', () => {
+    const proxyHostValue = proxyHostEl.value
+    const proxyPortValue = proxyPortEl.value
+    const patternsValue = patternsEl.value
+    const loginValue = loginEl.value
+    const passwordValue = passwordEl.value
 
     browser.storage.sync.set({
         [PROXY_HOST]: proxyHostValue,
@@ -19,20 +24,20 @@ save.addEventListener('click', () => {
         [PASSWORD]: btoa(passwordValue)
     })
         .then(() => {
-            result.innerHTML = 'Success saved'
+            resultEl.innerHTML = 'Success saved'
         })
-        .catch((e) => result.innerHTML = `Error: ${e.message}`)
+        .catch((e) => resultEl.innerHTML = `Error: ${e.message}`)
 })
 
 browser.storage.sync.get([PROXY_HOST, PROXY_PORT, PATTERNS, LOGIN, PASSWORD])
     .then((data) => {
-        proxyHost.value = data[PROXY_HOST] || ''
-        proxyPort.value = data[PROXY_PORT] || ''
-        patterns.value = data[PATTERNS] || ''
-        login.value = atob(data[LOGIN] || '')
-        password.value = atob(data[PASSWORD] || '')
+        proxyHostEl.value = data[PROXY_HOST] || ''
+        proxyPortEl.value = data[PROXY_PORT] || ''
+        patternsEl.value = data[PATTERNS] || ''
+        loginEl.value = atob(data[LOGIN] || '')
+        passwordEl.value = atob(data[PASSWORD] || '')
     })
-    .catch((e) => result.innerHTML = `Error: ${e.message}`)
+    .catch((e) => resultEl.innerHTML = `Error: ${e.message}`)
 
 browser.runtime.sendMessage({}).then(data => {
     const res = data.reduce((acc, e) => {
@@ -41,6 +46,6 @@ browser.runtime.sendMessage({}).then(data => {
     }, '')
 
     if (res) {
-        errors.innerHTML = res
+        errorsEl.innerHTML = res
     }
 })
