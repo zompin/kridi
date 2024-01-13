@@ -2,6 +2,7 @@
 <html>
     <header>
         <style>
+            @import url("chrome://global/skin/in-content/common-shared.css");
             body {
                 padding: 5px;
             }
@@ -57,9 +58,9 @@
         </label>
         <label>
             Patterns:
-            <textarea id="patterns" placeholder="google.com or 8.8.4.4"></textarea>
+            <textarea id="patterns" placeholder="google.com or 8.8.4.4" spellcheck="false"></textarea>
         </label>
-        <button id="save">Save</button>
+        <button class="primary" id="save">Save</button>
         <div id="result"></div>
         <div id="errors"></div>
         <script src="popup.js" type="module"></script>
