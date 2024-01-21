@@ -17,24 +17,12 @@
                 margin-top: 10px;
             }
 
-            input, textarea {
-
-            }
-
             textarea {
                 resize: vertical;
                 height: 150px;
             }
 
-            #save {
-                margin-top: 10px;
-            }
-
             #result:not(:empty) {
-                margin-top: 10px;
-            }
-
-            #errors:not(:empty) {
                 margin-top: 10px;
             }
         </style>
@@ -60,9 +48,7 @@
             Patterns:
             <textarea id="patterns" placeholder="google.com or 8.8.4.4" spellcheck="false"></textarea>
         </label>
-        <button class="primary" id="save">Save</button>
         <div id="result"></div>
-        <div id="errors"></div>
-        <script src="popup.js" type="module"></script>
+        <script src='js/popup.js' type="module"></script>
     </body>
 </html>

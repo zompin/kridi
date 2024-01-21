@@ -4,7 +4,7 @@
   "version": "1.2",
   "description": "Proxy",
   "background": {
-    "scripts": ["main.js"],
+    "scripts": ["js/main.js"],
     "type": "module"
   },
   "browser_specific_settings": {
@@ -14,7 +14,7 @@
     }
   },
   "browser_action": {
-    "default_popup": "popup/popup.html"
+    "default_popup": "popup.html"
   },
   "permissions": ["proxy", "storage", "<all_urls>"]
 }
