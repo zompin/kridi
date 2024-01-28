@@ -1,7 +1,7 @@
 {
   "manifest_version": 2,
   "name": "Rokot HTTP proxy",
-  "version": "1.3",
+  "version": "1.4",
   "description": "Proxy",
   "background": {
     "scripts": ["js/main.js"],
@@ -10,11 +10,11 @@
   "browser_specific_settings": {
     "gecko": {
       "id": "test-addon-id@rokot",
-      "strict_min_version": "93.0"
+      "strict_min_version": "113.0"
     },
     "gecko_android": {
       "id": "test-addon-id@rokot",
-      "strict_min_version": "93.0"
+      "strict_min_version": "113.0"
     }
   },
   "browser_action": {
