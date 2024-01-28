@@ -1,15 +1,16 @@
 import { Popup } from './lib/popup.js';
 import { DATA_KEYS } from './constants.js';
+import { storage } from './conditionApi.js';
 
 function getData(context) {
-    browser.storage.sync
+    storage
         .get(DATA_KEYS)
         .then(context.handleGetData.bind(context))
         .catch(context.handleError.bind(context));
 }
 
 function setData(context) {
-    browser.storage.sync
+    storage
         .set(context.data)
         .then(context.handleDataSuccess.bind(context))
         .catch(context.handleError.bind(context));

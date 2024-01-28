@@ -1,9 +1,10 @@
 import { Proxy } from './lib/proxy.js';
 import { DATA_KEYS } from './constants.js';
+import { storage } from './conditionApi.js';
 
 const proxy = new Proxy();
 
-browser.storage.sync
+storage
     .get(DATA_KEYS)
     .then(proxy.setData.bind(proxy))
     .catch(proxy.handleError.bind(proxy));
