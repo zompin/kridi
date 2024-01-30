@@ -7,6 +7,7 @@ describe('Proxy', () => {
     test('Smoke', () => {
         expect(proxy.proxy).toEqual({ type: 'direct' });
         expect(proxy.patterns).toEqual([]);
+        expect(proxy.credentials).toEqual({ cancel: true });
         expect(proxy.errors).toEqual([]);
     });
 
@@ -14,18 +15,24 @@ describe('Proxy', () => {
         proxy.setData({
             PROXY_HOST: 'test_proxy_host',
             PROXY_PORT: 'test_proxy_port',
-            LOGIN: 'test_login',
-            PASSWORD: 'test_password',
+            LOGIN: btoa('test_login'),
+            PASSWORD: btoa('test_password'),
             PATTERNS: 'test_pattern_1\ntest_pattern_2',
         });
 
         expect(proxy.proxy).toEqual({
             host: 'test_proxy_host',
             port: 'test_proxy_port',
-            username: 'test_login',
-            password: 'test_password',
             type: 'http',
         });
+
+        expect(proxy.credentials).toEqual({
+            authCredentials: {
+                username: 'test_login',
+                password: 'test_password',
+            },
+        });
+
         expect(proxy.patterns).toEqual([
             new RegExp(/test_pattern_1/i),
             new RegExp(/test_pattern_2/i),
@@ -36,17 +43,21 @@ describe('Proxy', () => {
         proxy.handleStorageChange({
             PROXY_HOST: { newValue: 'one' },
             PROXY_PORT: { newValue: 'two' },
-            LOGIN: { newValue: 'three' },
-            PASSWORD: { newValue: 'four' },
+            LOGIN: { newValue: btoa('three') },
+            PASSWORD: { newValue: btoa('four') },
             PATTERNS: { newValue: 'five' },
         });
 
         expect(proxy.proxy).toEqual({
             host: 'one',
             port: 'two',
-            username: 'three',
-            password: 'four',
             type: 'http',
+        });
+        expect(proxy.credentials).toEqual({
+            authCredentials: {
+                username: 'three',
+                password: 'four',
+            },
         });
         expect(proxy.patterns).toEqual([new RegExp(/five/i)]);
     });
@@ -55,8 +66,6 @@ describe('Proxy', () => {
         expect(proxy.handleProxyRequest({ url: 'five.com' })).toEqual({
             host: 'one',
             port: 'two',
-            username: 'three',
-            password: 'four',
             type: 'http',
         });
     });
@@ -65,6 +74,24 @@ describe('Proxy', () => {
         expect(proxy.handleProxyRequest({ url: 'tratata.com' })).toEqual({
             type: 'direct',
         });
+    });
+
+    test('handleAuthRequired auth is cancelled', () => {
+        expect(proxy.handleAuthRequired({ proxyInfo: {} })).toEqual({
+            cancel: true,
+        });
+    });
+
+    test('handleAuthRequired auth is success', () => {
+        expect(
+            proxy.handleAuthRequired({
+                proxyInfo: {
+                    host: 'one',
+                    port: 'two',
+                    type: 'http',
+                },
+            }),
+        ).toEqual({ authCredentials: { password: 'four', username: 'three' } });
     });
 
     test('Save and get errors', async () => {

@@ -9,9 +9,11 @@ import {
 
 export class Proxy {
     static Direct = { type: 'direct' };
+    static CancelAuth = { cancel: true };
     constructor() {
         this.proxy = Proxy.Direct;
         this.patterns = [];
+        this.credentials = Proxy.CancelAuth;
         this.errors = [];
     }
 
@@ -20,9 +22,15 @@ export class Proxy {
             type: 'http',
             host: data[PROXY_HOST],
             port: data[PROXY_PORT],
-            username: data[LOGIN],
-            password: data[PASSWORD],
         };
+
+        this.credentials = {
+            authCredentials: {
+                username: atob(data[LOGIN] || ''),
+                password: atob(data[PASSWORD] || ''),
+            },
+        };
+
         this.patterns = (data[PATTERNS] || '')
             .split('\n')
             .filter(Boolean)
@@ -49,6 +57,18 @@ export class Proxy {
         }
 
         return Proxy.Direct;
+    }
+
+    handleAuthRequired({ proxyInfo }) {
+        if (
+            this.proxy.host !== proxyInfo.host ||
+            this.proxy.port !== proxyInfo.port ||
+            this.proxy.type !== proxyInfo.type
+        ) {
+            return Proxy.CancelAuth;
+        }
+
+        return this.credentials;
     }
 
     handleError(e) {

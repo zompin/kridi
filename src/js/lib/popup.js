@@ -12,8 +12,9 @@ export class Popup {
     set data(data) {
         ELEMENTS.forEach((item) => {
             const el = this.document.getElementById(item.elementId);
-            el.value =
-                (item.hide ? atob(data[item.key]) : data[item.key]) || '';
+            el.value = item.hide
+                ? atob(data[item.key] || '')
+                : data[item.key] || '';
         });
     }
 
