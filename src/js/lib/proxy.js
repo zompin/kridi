@@ -62,7 +62,7 @@ export class Proxy {
     handleAuthRequired({ proxyInfo }) {
         if (
             this.proxy.host !== proxyInfo.host ||
-            this.proxy.port !== proxyInfo.port ||
+            this.proxy.port !== String(proxyInfo.port) ||
             this.proxy.type !== proxyInfo.type
         ) {
             return Proxy.CancelAuth;

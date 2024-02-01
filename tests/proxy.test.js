@@ -42,7 +42,7 @@ describe('Proxy', () => {
     test('On storage change', () => {
         proxy.handleStorageChange({
             PROXY_HOST: { newValue: 'one' },
-            PROXY_PORT: { newValue: 'two' },
+            PROXY_PORT: { newValue: '33333' },
             LOGIN: { newValue: btoa('three') },
             PASSWORD: { newValue: btoa('four') },
             PATTERNS: { newValue: 'five' },
@@ -50,7 +50,7 @@ describe('Proxy', () => {
 
         expect(proxy.proxy).toEqual({
             host: 'one',
-            port: 'two',
+            port: '33333',
             type: 'http',
         });
         expect(proxy.credentials).toEqual({
@@ -65,7 +65,7 @@ describe('Proxy', () => {
     test('handleProxyRequest matches pattern', () => {
         expect(proxy.handleProxyRequest({ url: 'five.com' })).toEqual({
             host: 'one',
-            port: 'two',
+            port: '33333',
             type: 'http',
         });
     });
@@ -87,7 +87,7 @@ describe('Proxy', () => {
             proxy.handleAuthRequired({
                 proxyInfo: {
                     host: 'one',
-                    port: 'two',
+                    port: 33333,
                     type: 'http',
                 },
             }),
