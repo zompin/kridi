@@ -9,32 +9,26 @@ import {
 
 export class Proxy {
     static Direct = { type: 'direct' };
-    static CancelAuth = { cancel: true };
     constructor() {
         this.proxy = Proxy.Direct;
         this.patterns = [];
-        this.credentials = Proxy.CancelAuth;
         this.errors = [];
     }
 
     setData(data) {
         this.proxy = {
-            type: 'http',
+            type: 'socks',
+            proxyDNS: true,
             host: data[PROXY_HOST],
             port: data[PROXY_PORT],
-        };
-
-        this.credentials = {
-            authCredentials: {
-                username: atob(data[LOGIN] || ''),
-                password: atob(data[PASSWORD] || ''),
-            },
+            username: atob(data[LOGIN]),
+            password: atob(data[PASSWORD]),
         };
 
         this.patterns = (data[PATTERNS] || '')
             .split('\n')
             .filter(Boolean)
-            .map((p) => new RegExp(p, 'i'));
+            .map((p) => (p === '*' ? p : new RegExp(p, 'i')));
     }
 
     handleStorageChange(e) {
@@ -51,24 +45,17 @@ export class Proxy {
 
     handleProxyRequest(requestInfo) {
         for (let pattern of this.patterns) {
-            if (pattern.test(requestInfo.url)) {
+            if (
+                pattern === '*' ||
+                pattern.test(requestInfo.url) ||
+                pattern.test(requestInfo.documentUrl) ||
+                pattern.test(requestInfo.originUrl)
+            ) {
                 return this.proxy;
             }
         }
 
         return Proxy.Direct;
-    }
-
-    handleAuthRequired({ proxyInfo }) {
-        if (
-            this.proxy.host !== proxyInfo.host ||
-            this.proxy.port !== String(proxyInfo.port) ||
-            this.proxy.type !== proxyInfo.type
-        ) {
-            return Proxy.CancelAuth;
-        }
-
-        return this.credentials;
     }
 
     handleError(e) {

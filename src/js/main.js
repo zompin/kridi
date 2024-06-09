@@ -18,9 +18,3 @@ browser.proxy.onRequest.addListener(proxy.handleProxyRequest.bind(proxy), {
 browser.proxy.onError.addListener(proxy.handleError.bind(proxy));
 
 browser.runtime.onMessage.addListener(proxy.getErrors.bind(proxy));
-
-browser.webRequest.onAuthRequired.addListener(
-    proxy.handleAuthRequired.bind(proxy),
-    { urls: ['<all_urls>'] },
-    ['blocking'],
-);
