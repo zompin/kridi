@@ -1,0 +1,37 @@
+@import url("chrome://global/skin/in-content/common-shared.css");
+body {
+    padding: 10px;
+}
+
+.grants {
+    max-width: 300px;
+    padding: 0 10px 10px;
+}
+
+.request-grants {
+    margin: 0;
+}
+
+label {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+}
+
+label + label {
+    margin-top: 10px;
+}
+
+textarea {
+    resize: vertical;
+    height: 150px;
+}
+
+textarea, input {
+    margin-left: 0;
+    margin-right: 0;
+}
+
+#result:not(:empty) {
+    margin-top: 10px;
+}

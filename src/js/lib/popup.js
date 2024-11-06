@@ -1,12 +1,14 @@
-import { ELEMENTS } from '../constants.js';
+import { DATA_KEYS, ELEMENTS } from '../constants.js';
 
 export class Popup {
-    constructor({ getData, setData, document }) {
+    constructor({ document, storage, permissions }) {
         this.document = document;
+        this.storage = storage;
+        this.permissions = permissions;
         this.resultElement = this.document.getElementById('result');
-        this.setData = setData;
-        getData(this);
-        this.document.addEventListener('keyup', this.handleKeyUp.bind(this));
+        this.subscribeEvents();
+        this.checkGrants();
+        this.loadData();
     }
 
     set data(data) {
@@ -27,22 +29,54 @@ export class Popup {
         }, {});
     }
 
-    handleGetData(d) {
-        this.data = d;
-    }
-
     handleError(e) {
         this.resultElement.innerHTML = `Error: ${e.message}`;
     }
 
-    handleDataSuccess() {
-        this.resultElement.innerHTML = 'Success saved';
+    loadData() {
+        this.storage
+            .get(DATA_KEYS)
+            .then((d) => {
+                this.data = d;
+            })
+            .catch(this.handleError.bind(this));
     }
 
-    handleKeyUp(e) {
-        if (!['INPUT', 'TEXTAREA'].includes(e.target.nodeName)) {
-            return;
-        }
-        this.setData(this);
+    handleBlur() {
+        this.storage.set(this.data).then(() => {
+            this.resultElement.innerHTML = 'Success saved';
+        });
+    }
+
+    setGrants(isGranted) {
+        this.document.querySelector('.grants').style.display = isGranted
+            ? 'none'
+            : 'block';
+        this.document.querySelector('.controls').style.display = isGranted
+            ? 'block'
+            : 'none';
+    }
+
+    checkGrants() {
+        this.permissions
+            .contains({ origins: ['<all_urls>'] })
+            .then(this.setGrants.bind(this));
+    }
+
+    requestGrants() {
+        this.permissions
+            .request({ origins: ['<all_urls>'] })
+            .then(this.setGrants.bind(this));
+    }
+
+    subscribeEvents() {
+        this.document
+            .querySelector('.request-grants')
+            .addEventListener('click', this.requestGrants.bind(this));
+        this.document
+            .querySelectorAll('input, textarea')
+            .forEach((el) =>
+                el.addEventListener('blur', this.handleBlur.bind(this)),
+            );
     }
 }

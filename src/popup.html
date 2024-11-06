@@ -1,54 +1,38 @@
 <!DOCTYPE html>
 <html>
-    <header>
+    <head>
         <meta name="viewport" content="width=device-width, initial-scale=1" />
-        <style>
-            @import url("chrome://global/skin/in-content/common-shared.css");
-            body {
-                padding: 5px;
-            }
-
-            label {
-                display: flex;
-                flex-direction: column;
-                gap: 5px;
-            }
-
-            label + label {
-                margin-top: 10px;
-            }
-
-            textarea {
-                resize: vertical;
-                height: 150px;
-            }
-
-            #result:not(:empty) {
-                margin-top: 10px;
-            }
-        </style>
-    </header>
+        <link href="styles.css" rel="stylesheet" />
+    </head>
     <body>
-        <label>
-            Proxy host:
-            <input type="text" id="proxyHost">
-        </label>
-        <label>
-            Proxy port:
-            <input type="text" id="proxyPort">
-        </label>
-        <label>
-            Login:
-            <input type="text" id="login">
-        </label>
-        <label>
-            Password:
-            <input type="password" id="password">
-        </label>
-        <label>
-            Patterns:
-            <textarea id="patterns" placeholder="google.com or 8.8.4.4" spellcheck="false"></textarea>
-        </label>
+        <div class='grants'>
+            <p>
+                Not enough permissions. Please click "Request permissions" to give permissions.
+            </p>
+            <button class="request-grants">Request permissions</button>
+        </div>
+        <div class='controls'>
+            <label>
+                Proxy host:
+                <input type="text" id="proxyHost">
+            </label>
+            <label>
+                Proxy port:
+                <input type="text" id="proxyPort">
+            </label>
+            <label>
+                Login:
+                <input type="text" id="login">
+            </label>
+            <label>
+                Password:
+                <input type="password" id="password">
+            </label>
+            <label>
+                Patterns:
+                <textarea id="patterns" placeholder="google.com or 8.8.4.4" spellcheck="false"></textarea>
+            </label>
+        </div>
         <div id="result"></div>
         <script src='js/popup.js' type="module"></script>
     </body>

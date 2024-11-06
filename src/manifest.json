@@ -1,5 +1,5 @@
 {
-  "manifest_version": 2,
+  "manifest_version": 3,
   "name": "Rokot HTTP proxy",
   "version": "1.9",
   "description": "Proxy",
@@ -7,18 +7,17 @@
     "scripts": ["js/main.js"],
     "type": "module"
   },
-  "browser_specific_settings": {
-    "gecko": {
-      "id": "test-addon-id@rokot",
-      "strict_min_version": "113.0"
-    },
-    "gecko_android": {
-      "id": "test-addon-id@rokot",
-      "strict_min_version": "113.0"
-    }
-  },
-  "browser_action": {
+  "action": {
     "default_popup": "popup.html"
   },
-  "permissions": ["proxy", "storage", "<all_urls>", "webRequest", "webRequestBlocking"]
+  "host_permissions": ["<all_urls>"],
+  "permissions": ["proxy", "activeTab", "storage"],
+  "commands": {
+    "_execute_action": {
+      "suggested_key": {
+        "default": "Ctrl+Shift+I"
+      },
+      "description": "Open proxy settings"
+    }
+  }
 }

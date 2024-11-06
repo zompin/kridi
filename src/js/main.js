@@ -11,6 +11,20 @@ storage
 
 browser.storage.onChanged.addListener(proxy.handleStorageChange.bind(proxy));
 
+// browser.permissions
+//     .contains({
+//         origins: ['<all_urls>'],
+//         // permissions: ['host_permissions'],
+//         // host_permissions: ['<all_urls>'],
+//     })
+//     .then((res) => {
+//         if (!res) {
+//             return browser.permissions.request({
+//                 origins: ['<all_urls>'],
+//             });
+//         }
+//     });
+
 browser.proxy.onRequest.addListener(proxy.handleProxyRequest.bind(proxy), {
     urls: ['<all_urls>'],
 });
