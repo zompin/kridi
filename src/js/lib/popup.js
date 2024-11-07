@@ -38,6 +38,7 @@ export class Popup {
             .get(DATA_KEYS)
             .then((d) => {
                 this.data = d;
+                this.autoFocus();
             })
             .catch(this.handleError.bind(this));
     }
@@ -78,5 +79,11 @@ export class Popup {
             .forEach((el) =>
                 el.addEventListener('blur', this.handleBlur.bind(this)),
             );
+    }
+
+    autoFocus() {
+        const input = this.document.querySelector('input');
+        input.focus();
+        input.select();
     }
 }
