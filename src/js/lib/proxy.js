@@ -9,6 +9,7 @@ import {
 
 export class Proxy {
     static Direct = { type: 'direct' };
+    static Cancel = { type: 'cancel' };
     constructor() {
         this.proxy = Proxy.Direct;
         this.patterns = [];
@@ -53,6 +54,13 @@ export class Proxy {
             ) {
                 return this.proxy;
             }
+        }
+
+        if (
+            this.patterns.length &&
+            ['other', 'speculative'].includes(requestInfo.type)
+        ) {
+            return Proxy.Cancel;
         }
 
         return Proxy.Direct;
