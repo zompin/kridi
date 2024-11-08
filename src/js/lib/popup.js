@@ -5,10 +5,10 @@ export class Popup {
         this.document = document;
         this.storage = storage;
         this.permissions = permissions;
-        this.resultElement = this.document.getElementById('result');
         this.subscribeEvents();
         this.checkGrants();
         this.loadData();
+        this.resultTimer = 0;
     }
 
     set data(data) {
@@ -30,7 +30,7 @@ export class Popup {
     }
 
     handleError(e) {
-        this.resultElement.innerHTML = `Error: ${e.message}`;
+        console.log(e);
     }
 
     loadData() {
@@ -38,14 +38,22 @@ export class Popup {
             .get(DATA_KEYS)
             .then((d) => {
                 this.data = d;
-                this.autoFocus();
             })
             .catch(this.handleError.bind(this));
     }
 
     handleBlur() {
         this.storage.set(this.data).then(() => {
-            this.resultElement.innerHTML = 'Success saved';
+            const resEl = this.document.querySelector('.result');
+
+            if (this.resultTimer) {
+                clearTimeout(this.resultTimer);
+            }
+
+            resEl.classList.add('show');
+            this.resultTimer = setTimeout(() => {
+                resEl.classList.remove('show');
+            }, 2000);
         });
     }
 
@@ -79,11 +87,5 @@ export class Popup {
             .forEach((el) =>
                 el.addEventListener('blur', this.handleBlur.bind(this)),
             );
-    }
-
-    autoFocus() {
-        const input = this.document.querySelector('input');
-        input.focus();
-        input.select();
     }
 }

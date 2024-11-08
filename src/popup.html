@@ -12,9 +12,14 @@
             <button class="request-grants">Request permissions</button>
         </div>
         <div class='controls'>
+            <div class='result'>
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" width="16" height="16" fill="context-fill" fill-opacity="context-fill-opacity">
+                    <path stroke="context-stroke none" stroke-width="0.5" d="m6.023 13-4.84-4.839a.626.626 0 0 1 .885-.885l4.307 4.308 7.559-7.561a.628.628 0 0 1 .885 0 .628.628 0 0 1 0 .885l-8.09 8.09-.706.002z"/>
+                </svg>
+            </div>
             <label>
                 Proxy host:
-                <input type="text" id="proxyHost">
+                <input type="text" id="proxyHost" autofocus>
             </label>
             <label>
                 Proxy port:
@@ -33,7 +38,6 @@
                 <textarea id="patterns" placeholder="google.com or 8.8.4.4" spellcheck="false"></textarea>
             </label>
         </div>
-        <div id="result"></div>
         <script src='js/popup.js' type="module"></script>
     </body>
 </html>
