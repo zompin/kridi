@@ -5,6 +5,8 @@ import {
     PATTERNS,
     PROXY_HOST,
     PROXY_PORT,
+    MODE,
+    MODES,
 } from '../constants.js';
 
 export class Proxy {
@@ -14,6 +16,7 @@ export class Proxy {
         this.proxy = Proxy.Direct;
         this.patterns = [];
         this.errors = [];
+        this.mode = MODES.FOR_SITES;
     }
 
     setData(data) {
@@ -29,7 +32,15 @@ export class Proxy {
         this.patterns = (data[PATTERNS] || '')
             .split('\n')
             .filter(Boolean)
-            .map((p) => (p === '*' ? p : new RegExp(p, 'i')));
+            .map((p) => {
+                try {
+                    return new RegExp(p, 'i');
+                } catch (e) {}
+            })
+            .filter(Boolean);
+
+        this.mode =
+            Object.values(MODES).find((m) => m === data[MODE]) || this.mode;
     }
 
     handleStorageChange(e) {
@@ -45,22 +56,27 @@ export class Proxy {
     }
 
     handleProxyRequest(requestInfo) {
-        for (let pattern of this.patterns) {
-            if (
-                pattern === '*' ||
-                pattern.test(requestInfo.url) ||
-                pattern.test(requestInfo.documentUrl) ||
-                pattern.test(requestInfo.originUrl)
-            ) {
-                return this.proxy;
-            }
+        if (['other'].includes(requestInfo.type)) {
+            return Proxy.Cancel;
         }
 
-        if (
-            this.patterns.length &&
-            ['other', 'speculative'].includes(requestInfo.type)
-        ) {
-            return Proxy.Cancel;
+        if (this.mode === MODES.FOR_ALL) {
+            return this.proxy;
+        }
+
+        for (let pattern of this.patterns) {
+            const hasPattern =
+                pattern.test(requestInfo.url) ||
+                pattern.test(requestInfo.documentUrl) ||
+                pattern.test(requestInfo.originUrl);
+
+            if (this.mode === MODES.FOR_SITES && hasPattern) {
+                return this.proxy;
+            }
+
+            if (this.mode === MODES.NOT_FOR_SITES && !hasPattern) {
+                return this.proxy;
+            }
         }
 
         return Proxy.Direct;

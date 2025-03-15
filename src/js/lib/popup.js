@@ -1,4 +1,4 @@
-import { DATA_KEYS, ELEMENTS } from '../constants.js';
+import { DATA_KEYS, ELEMENTS, MODE, MODES } from '../constants.js';
 
 export class Popup {
     constructor({ document, storage, permissions }) {
@@ -13,17 +13,35 @@ export class Popup {
 
     set data(data) {
         ELEMENTS.forEach((item) => {
-            const el = this.document.getElementById(item.elementId);
-            el.value = item.hide
+            const value = item.hide
                 ? atob(data[item.key] || '')
                 : data[item.key] || '';
+
+            if (item.name) {
+                const el = this.document.querySelector(
+                    `[name="${item.name}"][value="${value}"]`,
+                );
+
+                if (el) {
+                    el.checked = 'true';
+                }
+            } else {
+                const el = this.document.getElementById(item.elementId);
+                el.value = value;
+            }
+
+            if (item.key === MODE && value === MODES.FOR_ALL) {
+                document.querySelector('#patterns').disabled = 'true';
+            }
         });
     }
 
     get data() {
         return ELEMENTS.reduce((acc, item) => {
-            const el = this.document.getElementById(item.elementId);
-            const value = item.hide ? btoa(el.value) : el.value;
+            const el = item.elementId
+                ? this.document.getElementById(item.elementId)
+                : this.document.querySelector(`[name="${item.name}"]:checked`);
+            const value = item.hide ? btoa(el?.value || '') : el?.value || '';
 
             return { ...acc, [item.key]: value };
         }, {});
@@ -83,9 +101,16 @@ export class Popup {
             .querySelector('.request-grants')
             .addEventListener('click', this.requestGrants.bind(this));
         this.document
-            .querySelectorAll('input, textarea')
+            .querySelectorAll('input:not([type="radio"]), textarea')
             .forEach((el) =>
                 el.addEventListener('blur', this.handleBlur.bind(this)),
             );
+        this.document.querySelectorAll('[name="mode"]').forEach((el) => {
+            el.addEventListener('click', (e) => {
+                this.handleBlur();
+                document.querySelector('#patterns').disabled =
+                    e.target.value === 'for-all' ? 'true' : '';
+            });
+        });
     }
 }
