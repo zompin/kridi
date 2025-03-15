@@ -19,5 +19,11 @@
       },
       "description": "Open proxy settings"
     }
+  },
+  "browser_specific_settings": {
+    "gecko": {
+      "strict_min_version": "109",
+      "id": "test-addon-id@rokot"
+    }
   }
 }
