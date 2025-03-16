@@ -1,0 +1,14 @@
+<svg width="32" height="32" xmlns="http://www.w3.org/2000/svg">
+ <g>
+  <title>Layer 1</title>
+  <ellipse fill="none" stroke="#00ddff" stroke-width="3" cx="16.27063" cy="17.85395" id="svg_1" rx="10" ry="10"/>
+  <line fill="none" stroke="#00ddff" stroke-width="1.5" x1="5.58317" y1="17.97895" x2="5.58317" y2="5.5625" id="svg_2" />
+  <line fill="none" stroke="#00ddff" stroke-width="1.5" x1="5.58317" y1="5.41649" x2="8.89566" y2="10.66648" id="svg_3" />
+  <line fill="none" stroke="#00ddff" stroke-width="1.5" x1="27.02058" y1="17.35395" x2="27.02058" y2="5" id="svg_4" />
+  <line fill="none" stroke="#00ddff" stroke-width="1.5" x1="26.95808" y1="5.0415" x2="23.5831" y2="10.54148" id="svg_5" />
+  <ellipse fill="#00ddff" stroke="#00ddff" cx="5.56248" cy="5.40623" id="svg_9" rx="0.25" ry="0.25"/>
+  <ellipse fill="#00ddff" stroke="#00ddff" cx="26.96861" cy="5.03123" id="svg_10" rx="0.28125" ry="0.25"/>
+  <line id="svg_11" y2="12.15095" x2="7.69784" y1="7.90096" x1="6.38534" fill-opacity="null" stroke-opacity="null" stroke-width="3" stroke="#00ddff" fill="none"/>
+  <line id="svg_13" y2="12.15095" x2="25.32279" y1="7.33846" x1="26.13529" fill-opacity="null" stroke-opacity="null" stroke-width="3" stroke="#00ddff" fill="none"/>
+ </g>
+</svg>
