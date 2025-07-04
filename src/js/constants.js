@@ -40,4 +40,5 @@ export const MODES = {
     FOR_SITES: 'for-sites',
     NOT_FOR_SITES: 'not-for-sites',
     FOR_ALL: 'for-all',
+    DISABLED: 'disabled',
 };

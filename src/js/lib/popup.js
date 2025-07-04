@@ -30,7 +30,10 @@ export class Popup {
                 el.value = value;
             }
 
-            if (item.key === MODE && value === MODES.FOR_ALL) {
+            if (
+                item.key === MODE &&
+                [MODES.FOR_ALL, MODES.DISABLED].includes(value)
+            ) {
                 document.querySelector('#patterns').disabled = 'true';
             }
         });
@@ -108,8 +111,12 @@ export class Popup {
         this.document.querySelectorAll('[name="mode"]').forEach((el) => {
             el.addEventListener('click', (e) => {
                 this.handleBlur();
-                document.querySelector('#patterns').disabled =
-                    e.target.value === 'for-all' ? 'true' : '';
+                document.querySelector('#patterns').disabled = [
+                    MODES.FOR_ALL,
+                    MODES.DISABLED,
+                ].includes(e.target.value)
+                    ? 'true'
+                    : '';
             });
         });
     }
