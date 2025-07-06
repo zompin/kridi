@@ -1,13 +1,4 @@
-import {
-    ELEMENTS,
-    LOGIN,
-    PASSWORD,
-    PATTERNS,
-    PROXY_HOST,
-    PROXY_PORT,
-    MODE,
-    MODES,
-} from '../constants.js';
+import { ELEMENTS, FIELDS, MODES } from '../constants.js';
 
 export class Proxy {
     static Direct = { type: 'direct' };
@@ -23,13 +14,13 @@ export class Proxy {
         this.proxy = {
             type: 'socks',
             proxyDNS: true,
-            host: data[PROXY_HOST],
-            port: data[PROXY_PORT],
-            username: atob(data[LOGIN]),
-            password: atob(data[PASSWORD]),
+            host: data[FIELDS.PROXY_HOST],
+            port: data[FIELDS.PROXY_PORT],
+            username: atob(data[FIELDS.LOGIN]),
+            password: atob(data[FIELDS.PASSWORD]),
         };
 
-        this.patterns = (data[PATTERNS] || '')
+        this.patterns = (data[FIELDS.PATTERNS] || '')
             .split('\n')
             .filter(Boolean)
             .map((p) => {
@@ -40,7 +31,8 @@ export class Proxy {
             .filter(Boolean);
 
         this.mode =
-            Object.values(MODES).find((m) => m === data[MODE]) || this.mode;
+            Object.values(MODES).find((m) => m === data[FIELDS.MODE]) ||
+            this.mode;
     }
 
     handleStorageChange(e) {

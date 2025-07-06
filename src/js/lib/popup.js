@@ -1,4 +1,4 @@
-import { DATA_KEYS, ELEMENTS, MODE, MODES } from '../constants.js';
+import { DATA_KEYS, ELEMENTS, FIELDS, MODES } from '../constants.js';
 
 export class Popup {
     constructor({ document, storage, permissions }) {
@@ -31,7 +31,7 @@ export class Popup {
             }
 
             if (
-                item.key === MODE &&
+                item.key === FIELDS.MODE &&
                 [MODES.FOR_ALL, MODES.DISABLED].includes(value)
             ) {
                 document.querySelector('#patterns').disabled = 'true';

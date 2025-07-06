@@ -1,35 +1,37 @@
-export const PROXY_HOST = 'PROXY_HOST';
-export const PROXY_PORT = 'PROXY_PORT';
-export const PATTERNS = 'PATTERNS';
-export const LOGIN = 'LOGIN';
-export const PASSWORD = 'PASSWORD';
-export const MODE = 'MODE';
+export const FIELDS = {
+    PROXY_HOST: 'PROXY_HOST',
+    PROXY_PORT: 'PROXY_PORT',
+    PATTERNS: 'PATTERNS',
+    LOGIN: 'LOGIN',
+    PASSWORD: 'PASSWORD',
+    MODE: 'MODE',
+};
 
 export const ELEMENTS = [
     {
-        key: PROXY_HOST,
+        key: FIELDS.PROXY_HOST,
         elementId: 'proxyHost',
     },
     {
-        key: PROXY_PORT,
+        key: FIELDS.PROXY_PORT,
         elementId: 'proxyPort',
     },
     {
-        key: PATTERNS,
+        key: FIELDS.PATTERNS,
         elementId: 'patterns',
     },
     {
-        key: LOGIN,
+        key: FIELDS.LOGIN,
         elementId: 'login',
         hide: true,
     },
     {
-        key: PASSWORD,
+        key: FIELDS.PASSWORD,
         elementId: 'password',
         hide: true,
     },
     {
-        key: MODE,
+        key: FIELDS.MODE,
         name: 'mode',
     },
 ];
